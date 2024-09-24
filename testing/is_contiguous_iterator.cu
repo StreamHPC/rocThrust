@@ -144,7 +144,7 @@ template <typename IteratorT,
 struct check_unwrapped_iterator
 {
   using unwrapped_t = typename std::remove_reference<
-    decltype(thrust::detail::try_unwrap_contiguous_iterator(
+    decltype(thrust::try_unwrap_contiguous_iterator(
       std::declval<IteratorT>()))>::type;
 
   static constexpr bool value =
