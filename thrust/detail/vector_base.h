@@ -28,6 +28,7 @@
 #include <thrust/detail/type_traits.h>
 #include <thrust/detail/config.h>
 #include <thrust/detail/contiguous_storage.h>
+#include <thrust/sequence_access.h>
 
 #include <initializer_list>
 #include <vector>
@@ -487,6 +488,9 @@ template<typename T, typename Alloc>
      *  \return A copy of the alloctor used by this vector.
      */
     allocator_type get_allocator(void) const;
+
+    THRUST_SYNTHESIZE_SEQUENCE_ACCESS(vector_base, const_iterator);
+    THRUST_SYNTHESIZE_SEQUENCE_REVERSE_ACCESS(vector_base, const_reverse_iterator);
 
   protected:
     // Our storage
