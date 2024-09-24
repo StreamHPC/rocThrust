@@ -1,6 +1,6 @@
 #include <thrust/detail/config.h>
 
-#if THRUST_CPP_DIALECT >= 2011 && !defined(THRUST_LEGACY_GCC)
+#if !defined(THRUST_LEGACY_GCC)
 
 #  include <thrust/device_vector.h>
 #  include <thrust/iterator/zip_iterator.h>
@@ -178,4 +178,4 @@ struct TestNestedZipFunction2
 };
 SimpleUnitTest<TestNestedZipFunction2, type_list<int, float> > TestNestedZipFunctionInstance2;
 #endif // THRUST_DEVICE_SYSTEM == THRUST_DEVICE_SYSTEM_CUDA
-#endif // THRUST_CPP_DIALECT
+#endif // !THRUST_LEGACY_GCC

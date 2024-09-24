@@ -171,8 +171,6 @@ template<typename T, typename Alloc>
     THRUST_HOST_DEVICE
     contiguous_storage &operator=(contiguous_storage &&other);
 
-    THRUST_SYNTHESIZE_SEQUENCE_ACCESS(contiguous_storage, const_iterator);
-
   private:
     // XXX we could inherit from this to take advantage of empty base class optimization
     allocator_type m_allocator;
@@ -216,13 +214,11 @@ template<typename T, typename Alloc>
     THRUST_HOST_DEVICE
     void propagate_allocator_dispatch(false_type, const contiguous_storage &other);
 
-#if THRUST_CPP_DIALECT >= 2011
     THRUST_HOST_DEVICE
     void propagate_allocator_dispatch(true_type, contiguous_storage &other);
 
     THRUST_HOST_DEVICE
     void propagate_allocator_dispatch(false_type, contiguous_storage &other);
-#endif // THRUST_CPP_DIALECT >= 2011
 }; // end contiguous_storage
 
 } // end detail

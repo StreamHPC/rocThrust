@@ -64,25 +64,17 @@
 //#  if   THRUST_CPP_DIALECT >= 2017
 //#    define THRUST_INLINE_CONSTANT                 inline constexpr
 //#    define THRUST_INLINE_INTEGRAL_MEMBER_CONSTANT inline constexpr
-#  if THRUST_CPP_DIALECT >= 2011
 #    define THRUST_INLINE_CONSTANT                 static const _CCCL_DEVICE
 #    define THRUST_INLINE_INTEGRAL_MEMBER_CONSTANT static constexpr
-#  else
-#    define THRUST_INLINE_CONSTANT                 static const _CCCL_DEVICE
-#    define THRUST_INLINE_INTEGRAL_MEMBER_CONSTANT static const
-#  endif
+
 #else
 // FIXME: Add this when NVCC supports inline variables.
 //#  if   THRUST_CPP_DIALECT >= 2017
 //#    define THRUST_INLINE_CONSTANT                 inline constexpr
 //#    define THRUST_INLINE_INTEGRAL_MEMBER_CONSTANT inline constexpr
-#  if THRUST_CPP_DIALECT >= 2011
 #    define THRUST_INLINE_CONSTANT                 static constexpr
 #    define THRUST_INLINE_INTEGRAL_MEMBER_CONSTANT static constexpr
-#  else
-#    define THRUST_INLINE_CONSTANT                 static const
-#    define THRUST_INLINE_INTEGRAL_MEMBER_CONSTANT static const
-#  endif
+
 #endif
 
 #if THRUST_DEVICE_SYSTEM == THRUST_DEVICE_SYSTEM_HIP

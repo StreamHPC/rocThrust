@@ -578,7 +578,7 @@ THRUST_HOST_DEVICE inline double real_part_reciprocal(double x, double y)
  * Re(catanh(z)) = x/|z|^2 + O(x/z^4)
  *    as z -> infinity, uniformly in x
  */
-#if THRUST_CPP_DIALECT >= 2011 || THRUST_HOST_COMPILER != THRUST_HOST_COMPILER_MSVC
+#if THRUST_HOST_COMPILER != THRUST_HOST_COMPILER_MSVC
 THRUST_HOST_DEVICE inline complex<double> catanh(complex<double> z)
 {
   double x, y, ax, ay, rx, ry;
@@ -759,7 +759,7 @@ THRUST_HOST_DEVICE inline complex<double> asinh(const complex<double>& z)
   return detail::complex::casinh(z);
 }
 
-#if (THRUST_CPP_DIALECT >= 2011 || THRUST_HOST_COMPILER != THRUST_HOST_COMPILER_MSVC) && !defined(__clang__)
+#if (THRUST_HOST_COMPILER != THRUST_HOST_COMPILER_MSVC) && !defined(__clang__)
 template <>
 THRUST_HOST_DEVICE inline complex<double> atanh(const complex<double>& z)
 {

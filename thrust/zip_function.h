@@ -10,8 +10,7 @@
 #include <thrust/detail/config.h>
 #include <thrust/detail/cpp11_required.h>
 #include <thrust/detail/modern_gcc_required.h>
-
-#if THRUST_CPP_DIALECT >= 2011 && !defined(THRUST_LEGACY_GCC)
+#if !defined(THRUST_LEGACY_GCC)
 
 #include <thrust/tuple.h>
 #include <thrust/type_traits/integer_sequence.h>
