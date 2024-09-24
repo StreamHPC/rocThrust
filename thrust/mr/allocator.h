@@ -224,6 +224,7 @@ public:
     stateless_resource_allocator(const stateless_resource_allocator<U, Upstream> & other)
         : base(other) {}
 
+    /*! Default copy assignment operator. */
     stateless_resource_allocator & operator=(const stateless_resource_allocator &) = default;
 
     /*! Destructor. */

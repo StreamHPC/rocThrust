@@ -106,6 +106,7 @@ template<typename T>
     THRUST_HOST_DEVICE
     inline device_malloc_allocator(device_malloc_allocator<U> const&) {}
 
+    /*! Default copy assignment operator. */
     device_malloc_allocator & operator=(const device_malloc_allocator &) = default;
 
     /*! Returns the address of an allocated object.
