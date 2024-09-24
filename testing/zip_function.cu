@@ -70,7 +70,7 @@ VariableUnitTest<TestZipFunctionTransform, ThirtyTwoBitTypes> TestZipFunctionTra
 
 struct RemovePred
 {
-  __host__ __device__ bool operator()(const thrust::tuple<uint32_t, uint32_t>& ele1, const float&)
+  THRUST_HOST_DEVICE bool operator()(const thrust::tuple<uint32_t, uint32_t>& ele1, const float&)
   {
     return thrust::get<0>(ele1) == thrust::get<1>(ele1);
   }
@@ -102,7 +102,7 @@ SimpleUnitTest<TestZipFunctionMixed, type_list<int, float> > TestZipFunctionMixe
 
 struct NestedFunctionCall
 {
-  __host__ __device__ bool
+  THRUST_HOST_DEVICE bool
   operator()(const thrust::tuple<uint32_t, thrust::tuple<thrust::tuple<int, int>, thrust::tuple<int, int>>>& idAndPt)
   {
     thrust::tuple<thrust::tuple<int, int>, thrust::tuple<int, int>> ele1 = thrust::get<1>(idAndPt);
@@ -138,12 +138,13 @@ struct TestNestedZipFunction
 };
 SimpleUnitTest<TestNestedZipFunction, type_list<int, float> > TestNestedZipFunctionInstance;
 
-struct SortPred {
-    __device__ __forceinline__
-    bool operator()(const thrust::tuple<thrust::tuple<int, int>, int>& a,
-                    const thrust::tuple<thrust::tuple<int, int>, int>& b) {
-        return thrust::get<1>(a) < thrust::get<1>(b);
-    }
+struct SortPred
+{
+  THRUST_DEVICE __forceinline__ bool
+  operator()(const thrust::tuple<thrust::tuple<int, int>, int>& a, const thrust::tuple<thrust::tuple<int, int>, int>& b)
+  {
+    return thrust::get<1>(a) < thrust::get<1>(b);
+  }
 };
 #if THRUST_DEVICE_SYSTEM == THRUST_DEVICE_SYSTEM_CUDA
 template <typename T>

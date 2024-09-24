@@ -744,7 +744,7 @@ pow(const complex<T0>& x, const complex<T1>& y);
  *  \param x The base.
  *  \param y The exponent.
  */
-template <typename T0, typename T1, std::enable_if_t<std::is_arithmetic<T1>::value, int> = 0>
+template <typename T0, typename T1>
 THRUST_HOST_DEVICE
 complex<typename detail::promoted_numerical_type<T0, T1>::type>
 pow(const complex<T0>& x, const T1& y);
@@ -757,7 +757,7 @@ pow(const complex<T0>& x, const T1& y);
  *  \param x The base.
  *  \param y The exponent.
  */
-template <typename T0, typename T1, std::enable_if_t<std::is_arithmetic<T0>::value, int> = 0>
+template <typename T0, typename T1>
 THRUST_HOST_DEVICE
 complex<typename detail::promoted_numerical_type<T0, T1>::type>
 pow(const T0& x, const complex<T1>& y);
