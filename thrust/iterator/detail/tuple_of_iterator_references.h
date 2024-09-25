@@ -24,9 +24,18 @@
 #include <thrust/tuple.h>
 
 #if THRUST_DEVICE_SYSTEM == THRUST_DEVICE_SYSTEM_CUDA
-
 #include <cuda/std/tuple>
 #include <cuda/std/type_traits>
+#elif defined(__has_include)
+#if __has_include(<cuda/std/tuple>)
+#include <cuda/std/tuple>
+#endif // __has_include(<cuda/std/tuple>)
+#if __has_include(<cuda/std/type_traits>)
+#include <cuda/std/type_traits>
+#endif // __has_include(<cuda/std/type_traits>)
+#endif // THRUST_DEVICE_SYSTEM
+
+#if THRUST_DEVICE_SYSTEM == THRUST_DEVICE_SYSTEM_CUDA
 
 THRUST_NAMESPACE_BEGIN
 

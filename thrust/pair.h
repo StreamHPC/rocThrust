@@ -24,8 +24,14 @@
 #include <thrust/detail/config.h>
 
 #if THRUST_DEVICE_SYSTEM == THRUST_DEVICE_SYSTEM_CUDA
-
 #include <cuda/std/utility>
+#elif defined(__has_include)
+#if __has_include(<cuda/std/utility>)
+#include <cuda/std/utility>
+#endif // __has_include(<cuda/std/utility>)
+#endif // THRUST_DEVICE_SYSTEM
+
+#if THRUST_DEVICE_SYSTEM == THRUST_DEVICE_SYSTEM_CUDA
 
 THRUST_NAMESPACE_BEGIN
 
