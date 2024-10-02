@@ -29,9 +29,76 @@
 #include <thrust/logical.h>
 #include <thrust/mismatch.h>
 
+#include <rocprim/rocprim.hpp>
+
 #include <algorithm>
 #include <execution>
 #include <utility>
+
+namespace thrust
+{
+template<class InputIt1, class InputIt2, class BinaryPred>
+InputIt1 THRUST_HIP_FUNCTION
+find_first_of(InputIt1 first, InputIt1 last,
+              InputIt2 s_first, InputIt2 s_last,
+              BinaryPred p)
+{
+    if (s_first == s_last)
+    {
+        return last;
+    }
+
+    InputIt1 d_output;
+
+    size_t size = last - first;
+    size_t s_size = s_last - s_first;
+
+    // temp storage
+    size_t temp_storage_size_bytes;
+    void*  d_temp_storage = nullptr;
+    // Get size of d_temp_storage
+    hipError_t error = ::rocprim::find_first_of(d_temp_storage,
+                                              temp_storage_size_bytes,
+                                              first,
+                                              s_first,
+                                              d_output,
+                                              size,
+                                              s_size,
+                                              p);
+
+    if (error != hipSuccess)
+    {
+        return last;
+    }
+    thrust::device_system_tag dev_tag;
+
+    d_temp_storage = thrust::malloc(dev_tag, temp_storage_size_bytes).get();
+
+    error = ::rocprim::find_first_of(d_temp_storage,
+                                   temp_storage_size_bytes,
+                                   first,
+                                   s_first,
+                                   d_output,
+                                   size,
+                                   s_size,
+                                   p);
+
+    if (error != hipSuccess)
+    {
+        return last;
+    }
+
+    error = hipDeviceSynchronize();
+    if (error != hipSuccess)
+    {
+        return last;
+    }
+
+    thrust::free(dev_tag, d_temp_storage);
+    
+    return d_output;
+}
+}
 
 namespace std
 {
@@ -237,7 +304,59 @@ namespace std
     // END FIND_END
 
     // BEGIN FIND_FIRST_OF
-    // TODO: UNIMPLEMENTED IN THRUST
+    template< class ExecutionPolicy,
+              class ForwardIt1,
+              class ForwardIt2,
+              enable_if_t<
+                ::hipstd::is_offloadable_iterator<ForwardIt1>() &&
+                ::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+        ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
+                                 ForwardIt1 first, ForwardIt1 last,
+                                 ForwardIt2 s_first, ForwardIt2 s_last)
+    {
+        return ::thrust::find_first_of(first, last, s_first, s_last, [](auto const & lhs, auto const & rhs){ return lhs == rhs; });
+    }
+
+    template< class ExecutionPolicy,
+              class ForwardIt1,
+              class ForwardIt2,
+              enable_if_t<
+                !::hipstd::is_offloadable_iterator<ForwardIt1>() ||
+                !::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+        ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
+                                 ForwardIt1 first, ForwardIt1 last,
+                                 ForwardIt2 s_first, ForwardIt2 s_last )
+    {
+        return ::std::find_first_of(::std::execution::par, first, last, s_first, s_last);
+    }
+
+    template< class ExecutionPolicy,
+              class ForwardIt1,
+              class ForwardIt2,
+              class BinaryPred,
+              enable_if_t<
+                ::hipstd::is_offloadable_iterator<ForwardIt1>() &&
+                ::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+        ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
+                                 ForwardIt1 first, ForwardIt1 last,
+                                 ForwardIt2 s_first, ForwardIt2 s_last, BinaryPred p)
+    {
+        return ::thrust::find_first_of(first, last, s_first, s_last, p);
+    }
+
+    template< class ExecutionPolicy,
+              class ForwardIt1,
+              class ForwardIt2,
+              class BinaryPred,
+              enable_if_t<
+                !::hipstd::is_offloadable_iterator<ForwardIt1>() ||
+                !::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+        ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
+                                 ForwardIt1 first, ForwardIt1 last,
+                                 ForwardIt2 s_first, ForwardIt2 s_last, BinaryPred p)
+    {
+        return ::std::find_first_of(::std::execution::par, first, last, s_first, s_last, p);
+    }
     // END FIND_FIRST_OF
 
     // BEGIN ADJACENT_FIND

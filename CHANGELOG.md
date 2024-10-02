@@ -11,6 +11,7 @@ Documentation for rocThrust available at
 * Added smoke test options, which runs a subset of the unit tests and ensures that less than 2gb of VRAM will be used. Use `python rtest.py [--emulation|-e|--test|-t]=smoke` to run these tests.
 * Added `--emulation` option for `rtest.py`
 * Merged changes from upstream CCCL/thrust 2.4.0
+* Add `find_first_of` to HIPSTDPAR
 
 ### Changed
 * `--test|-t` is no longer a required flag for `rtest.py`. Instead, the user can use either `--emulation|-e` or `--test|-t`, but not both.
