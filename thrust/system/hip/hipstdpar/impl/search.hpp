@@ -85,12 +85,14 @@ find_first_of(InputIt1 first, InputIt1 last,
 
     if (error != hipSuccess)
     {
+        thrust::free(dev_tag, d_temp_storage);
         return last;
     }
 
     error = hipDeviceSynchronize();
     if (error != hipSuccess)
     {
+        thrust::free(dev_tag, d_temp_storage);
         return last;
     }
 
