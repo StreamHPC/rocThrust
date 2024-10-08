@@ -306,12 +306,12 @@ namespace std
     // END FIND_END
 
     // BEGIN FIND_FIRST_OF
-    template< class ExecutionPolicy,
-              class ForwardIt1,
+    template< class ForwardIt1,
               class ForwardIt2,
               enable_if_t<
                 ::hipstd::is_offloadable_iterator<ForwardIt1>() &&
-                ::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+                ::hipstd::is_offloadable_iterator<ForwardIt2>()>* = nullptr>
+        inline
         ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
                                  ForwardIt1 first, ForwardIt1 last,
                                  ForwardIt2 s_first, ForwardIt2 s_last)
@@ -319,12 +319,12 @@ namespace std
         return ::thrust::find_first_of(first, last, s_first, s_last, [](auto const & lhs, auto const & rhs){ return lhs == rhs; });
     }
 
-    template< class ExecutionPolicy,
-              class ForwardIt1,
+    template< class ForwardIt1,
               class ForwardIt2,
               enable_if_t<
                 !::hipstd::is_offloadable_iterator<ForwardIt1>() ||
-                !::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+                !::hipstd::is_offloadable_iterator<ForwardIt2>()>* = nullptr>
+        inline
         ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
                                  ForwardIt1 first, ForwardIt1 last,
                                  ForwardIt2 s_first, ForwardIt2 s_last )
@@ -332,13 +332,14 @@ namespace std
         return ::std::find_first_of(::std::execution::par, first, last, s_first, s_last);
     }
 
-    template< class ExecutionPolicy,
-              class ForwardIt1,
+    template< class ForwardIt1,
               class ForwardIt2,
               class BinaryPred,
               enable_if_t<
                 ::hipstd::is_offloadable_iterator<ForwardIt1>() &&
-                ::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+                ::hipstd::is_offloadable_iterator<ForwardIt2>() &&
+                ::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
+        inline
         ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
                                  ForwardIt1 first, ForwardIt1 last,
                                  ForwardIt2 s_first, ForwardIt2 s_last, BinaryPred p)
@@ -346,13 +347,14 @@ namespace std
         return ::thrust::find_first_of(first, last, s_first, s_last, p);
     }
 
-    template< class ExecutionPolicy,
-              class ForwardIt1,
+    template< class ForwardIt1,
               class ForwardIt2,
               class BinaryPred,
               enable_if_t<
                 !::hipstd::is_offloadable_iterator<ForwardIt1>() ||
-                !::hipstd::is_offloadable_callable<ForwardIt2>()>* = nullptr>
+                !::hipstd::is_offloadable_iterator<ForwardIt2>() ||
+                !::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
+        inline
         ForwardIt1 find_first_of(execution::parallel_unsequenced_policy, 
                                  ForwardIt1 first, ForwardIt1 last,
                                  ForwardIt2 s_first, ForwardIt2 s_last, BinaryPred p)
