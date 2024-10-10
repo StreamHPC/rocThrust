@@ -48,7 +48,9 @@ find_first_of(InputIt1 first, InputIt1 last,
         return last;
     }
 
-    InputIt1 d_output;
+    thrust::device_system_tag dev_tag;
+    size_t* d_output;
+    d_output = thrust::malloc<size_t>(dev_tag, sizeof(*d_output)).get();
 
     size_t size = last - first;
     size_t s_size = s_last - s_first;
@@ -70,7 +72,6 @@ find_first_of(InputIt1 first, InputIt1 last,
     {
         return last;
     }
-    thrust::device_system_tag dev_tag;
 
     d_temp_storage = thrust::malloc(dev_tag, temp_storage_size_bytes).get();
 
@@ -86,6 +87,7 @@ find_first_of(InputIt1 first, InputIt1 last,
     if (error != hipSuccess)
     {
         thrust::free(dev_tag, d_temp_storage);
+        thrust::free(dev_tag, d_output);
         return last;
     }
 
@@ -93,12 +95,17 @@ find_first_of(InputIt1 first, InputIt1 last,
     if (error != hipSuccess)
     {
         thrust::free(dev_tag, d_temp_storage);
+        thrust::free(dev_tag, d_output);
         return last;
     }
 
+    size_t offset;
+    hipMemcpy(&offset, d_output, sizeof(offset), hipMemcpyDeviceToHost);
+
     thrust::free(dev_tag, d_temp_storage);
-    
-    return d_output;
+    thrust::free(dev_tag, d_output);
+
+    return first + offset;
 }
 }
 
