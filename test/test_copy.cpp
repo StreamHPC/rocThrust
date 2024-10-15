@@ -338,7 +338,7 @@ TYPED_TEST(CopyTests, TestCopyListTo)
 template <typename T>
 struct is_even
 {
-    __host__ __device__ bool operator()(T x)
+    __host__ __device__ bool operator()(T x) const
     {
         return (static_cast<unsigned int>(x) & 1) == 0;
     }
@@ -347,7 +347,7 @@ struct is_even
 template <typename T>
 struct is_true
 {
-    __host__ __device__ bool operator()(T x)
+    __host__ __device__ bool operator()(T x) const
     {
         return x ? true : false;
     }
@@ -356,7 +356,7 @@ struct is_true
 template <typename T>
 struct mod_3
 {
-    __host__ __device__ unsigned int operator()(T x)
+    __host__ __device__ unsigned int operator()(T x) const
     {
         return static_cast<unsigned int>(x) % 3;
     }

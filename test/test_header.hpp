@@ -193,8 +193,42 @@ struct Params<thrust::device_vector<T>, ExecutionPolicy>
 
 // Set of test parameter types
 
+class large_data
+{
+public:
+    __host__ __device__ large_data()
+    {
+        data[0] = 0;
+    }
+    __host__ __device__ large_data(large_data const & val)
+    {
+        data[0] = val.data[0];
+    }
+    __host__ __device__ large_data(int n)
+    {
+        data[0] = n;
+    }
+    large_data& __host__ __device__ operator=(large_data const & val)
+    {
+        data[0] = val.data[0];
+        return *this;
+    }
+    bool __host__ __device__ operator==(large_data const & val) const
+    {
+        return data[0] == val.data[0];
+    }
+
+    __host__ __device__ operator int() const
+    {
+        return data[0];
+    }
+
+    int8_t data[512];
+};
+
 // Host and device vectors of all type as a test parameter
 typedef ::testing::Types<
+    Params<thrust::device_vector<large_data>>,
     Params<thrust::host_vector<short>>,
     Params<thrust::host_vector<int>>,
     Params<thrust::host_vector<long long>>,

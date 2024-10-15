@@ -16,6 +16,7 @@ Documentation for rocThrust available at
 ### Changed
 * `--test|-t` is no longer a required flag for `rtest.py`. Instead, the user can use either `--emulation|-e` or `--test|-t`, but not both.
 * Split the contents of HIPSTDPAR's forwarding header into several implementation headers.
+* Fixed `copy_if` to work with large data types (512 bytes)
 
 ## (Unreleased) rocThrust 3.2.0 for ROCm 6.3
 
