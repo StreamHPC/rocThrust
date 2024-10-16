@@ -28,7 +28,7 @@
 #include <iterator>
 #include <list>
 
-TESTS_DEFINE(CopyTests, FullTestsParams)
+TESTS_DEFINE(CopyTests, FullWithLargeTypesTestsParams)
 TESTS_DEFINE(CopyIntegerTests, IntegerTestsParams)
 
 TEST(HipThrustCopy, HostToDevice)

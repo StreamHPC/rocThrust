@@ -230,9 +230,14 @@ public:
     int8_t data[512];
 };
 
+template<class T>
+bool __host__ __device__ operator==(T const & lhs, large_data const & rhs)
+{
+    return static_cast<large_data>(lhs).data[0] == rhs.data[0];
+}
+
 // Host and device vectors of all type as a test parameter
 typedef ::testing::Types<
-    Params<thrust::device_vector<large_data>>,
     Params<thrust::host_vector<short>>,
     Params<thrust::host_vector<int>>,
     Params<thrust::host_vector<long long>>,
@@ -253,6 +258,29 @@ typedef ::testing::Types<
     Params<thrust::device_vector<float>, std::decay_t<decltype(thrust::hip::par_det_nosync)>>,
     Params<thrust::device_vector<double>>>
     FullTestsParams;
+
+typedef ::testing::Types<
+    Params<thrust::host_vector<short>>,
+    Params<thrust::host_vector<int>>,
+    Params<thrust::host_vector<long long>>,
+    Params<thrust::host_vector<unsigned short>>,
+    Params<thrust::host_vector<unsigned int>>,
+    Params<thrust::host_vector<unsigned long long>>,
+    Params<thrust::host_vector<float>>,
+    Params<thrust::host_vector<double>>,
+    Params<thrust::device_vector<short>>,
+    Params<thrust::device_vector<int>>,
+    Params<thrust::device_vector<int>, std::decay_t<decltype(thrust::hip::par_nosync)>>,
+    Params<thrust::device_vector<long long>>,
+    Params<thrust::device_vector<unsigned short>>,
+    Params<thrust::device_vector<unsigned int>>,
+    Params<thrust::device_vector<unsigned long long>>,
+    Params<thrust::device_vector<float>>,
+    Params<thrust::device_vector<float>, std::decay_t<decltype(thrust::hip::par_det)>>,
+    Params<thrust::device_vector<float>, std::decay_t<decltype(thrust::hip::par_det_nosync)>>,
+    Params<thrust::device_vector<double>>,
+    Params<thrust::device_vector<large_data>>>
+    FullWithLargeTypesTestsParams;
 
 // Host and device vectors of signed type
 typedef ::testing::Types<Params<thrust::host_vector<short>>,
