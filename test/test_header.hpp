@@ -217,7 +217,11 @@ public:
     {
         return data[0] == val.data[0];
     }
-
+    large_data& __host__ __device__ operator++()
+    {
+        ++data[0];
+        return *this;
+    }
     __host__ __device__ operator int() const
     {
         return data[0];

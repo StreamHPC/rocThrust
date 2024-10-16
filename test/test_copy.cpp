@@ -220,11 +220,11 @@ TYPED_TEST(CopyTests, TestCopyMatchingTypes)
     thrust::device_vector<T>                    d(5, (T)10);
     typename thrust::device_vector<T>::iterator d_result
         = thrust::copy(v.begin(), v.end(), d.begin());
-    ASSERT_EQ(d[0], T(0));
-    ASSERT_EQ(d[1], T(1));
-    ASSERT_EQ(d[2], T(2));
-    ASSERT_EQ(d[3], T(3));
-    ASSERT_EQ(d[4], T(4));
+    ASSERT_EQ(T(0), d[0]);
+    ASSERT_EQ(T(1), d[1]);
+    ASSERT_EQ(T(2), d[2]);
+    ASSERT_EQ(T(3), d[3]);
+    ASSERT_EQ(T(4), d[4]);
     ASSERT_EQ_QUIET(d_result, d.end());
 }
 
@@ -309,11 +309,11 @@ TYPED_TEST(CopyTests, TestCopyListTo)
 
     typename Vector::iterator v_result = thrust::copy(l.begin(), l.end(), v.begin());
 
-    ASSERT_EQ(v[0], 0);
-    ASSERT_EQ(v[1], 1);
-    ASSERT_EQ(v[2], 2);
-    ASSERT_EQ(v[3], 3);
-    ASSERT_EQ(v[4], 4);
+    ASSERT_EQ(T(0), v[0]);
+    ASSERT_EQ(T(1), v[1]);
+    ASSERT_EQ(T(2), v[2]);
+    ASSERT_EQ(T(3), v[3]);
+    ASSERT_EQ(T(4), v[4]);
     ASSERT_EQ_QUIET(v_result, v.end());
 
     l.clear();
@@ -323,15 +323,15 @@ TYPED_TEST(CopyTests, TestCopyListTo)
     ASSERT_EQ(l.size(), 5);
 
     typename std::list<T>::const_iterator iter = l.begin();
-    ASSERT_EQ(*iter, 0);
+    ASSERT_EQ(T(0), *iter);
     iter++;
-    ASSERT_EQ(*iter, 1);
+    ASSERT_EQ(T(1), *iter);
     iter++;
-    ASSERT_EQ(*iter, 2);
+    ASSERT_EQ(T(2), *iter);
     iter++;
-    ASSERT_EQ(*iter, 3);
+    ASSERT_EQ(T(3), *iter);
     iter++;
-    ASSERT_EQ(*iter, 4);
+    ASSERT_EQ(T(4), *iter);
     iter++;
 }
 
@@ -526,10 +526,10 @@ TYPED_TEST(CopyTests, TestCopyCountingIterator)
 
     thrust::copy(Policy{}, iter, iter + 4, vec.begin());
 
-    ASSERT_EQ(vec[0], T(1));
-    ASSERT_EQ(vec[1], T(2));
-    ASSERT_EQ(vec[2], T(3));
-    ASSERT_EQ(vec[3], T(4));
+    ASSERT_EQ(T(1), vec[0]);
+    ASSERT_EQ(T(2), vec[1]);
+    ASSERT_EQ(T(3), vec[2]);
+    ASSERT_EQ(T(4), vec[3]);
 }
 
 TYPED_TEST(CopyTests, TestCopyZipIterator)
@@ -576,12 +576,12 @@ TYPED_TEST(CopyTests, TestCopyConstantIteratorToZipIterator)
                  thrust::make_constant_iterator(thrust::tuple<T, T>(4, 7)) + v1.size(),
                  thrust::make_zip_iterator(thrust::make_tuple(v1.begin(), v2.begin())));
 
-    ASSERT_EQ(v1[0], T(4));
-    ASSERT_EQ(v1[1], T(4));
-    ASSERT_EQ(v1[2], T(4));
-    ASSERT_EQ(v2[0], T(7));
-    ASSERT_EQ(v2[1], T(7));
-    ASSERT_EQ(v2[2], T(7));
+    ASSERT_EQ(T(4), v1[0]);
+    ASSERT_EQ(T(4), v1[1]);
+    ASSERT_EQ(T(4), v1[2]);
+    ASSERT_EQ(T(7), v2[0]);
+    ASSERT_EQ(T(7), v2[1]);
+    ASSERT_EQ(T(7), v2[2]);
 }
 
 template <typename InputIterator, typename OutputIterator>
