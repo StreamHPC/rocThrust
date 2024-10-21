@@ -206,7 +206,7 @@ public:
     }
     __host__ __device__ large_data(int n)
     {
-        data[0] = n;
+        data[0] = static_cast<int8_t>(n);
     }
     large_data& __host__ __device__ operator=(large_data const & val)
     {
@@ -224,7 +224,7 @@ public:
     }
     __host__ __device__ operator int() const
     {
-        return data[0];
+        return static_cast<int>(data[0]);
     }
 
     int8_t data[512];
