@@ -35,8 +35,10 @@
 #include <execution>
 #include <utility>
 
+// rocThrust is currently missing some API entries, forward calls to rocPRIM until they are added.
 namespace thrust
 {
+// BEGIN FIND_FIRST_OF
 template<class InputIt1, class InputIt2, class BinaryPred>
 InputIt1 THRUST_HIP_FUNCTION
 find_first_of(InputIt1 first, InputIt1 last,
@@ -107,6 +109,7 @@ find_first_of(InputIt1 first, InputIt1 last,
 
     return first + offset;
 }
+// END FIND_FIRST_OF
 
 // BEGIN SEARCH
 template<class InputIt1, class InputIt2, class BinaryPred>
@@ -253,6 +256,62 @@ find_end(InputIt1 first, InputIt1 last,
     return first + offset;
 }
 // END FIND_END
+
+// BEGIN ADJACENT_FIND
+template <class InputIt, class BinaryPred>
+InputIt THRUST_HIP_FUNCTION adjacent_find(InputIt first, InputIt last, BinaryPred p)
+{
+  if (first == last)
+  {
+    return last;
+  }
+
+  thrust::device_system_tag dev_tag;
+  size_t*                   d_output;
+  d_output = thrust::malloc<size_t>(dev_tag, sizeof(*d_output)).get();
+
+  size_t size   = last - first;
+
+  // temp storage
+  size_t temp_storage_size_bytes;
+  void*  d_temp_storage = nullptr;
+  // Get size of d_temp_storage
+  hipError_t error =
+    ::rocprim::adjacent_find(d_temp_storage, temp_storage_size_bytes, first, d_output, size, p);
+
+  if (error != hipSuccess)
+  {
+    return last;
+  }
+
+  d_temp_storage = thrust::malloc(dev_tag, temp_storage_size_bytes).get();
+
+  error = ::rocprim::adjacent_find(d_temp_storage, temp_storage_size_bytes, first, d_output, size, p);
+
+  if (error != hipSuccess)
+  {
+    thrust::free(dev_tag, d_temp_storage);
+    thrust::free(dev_tag, d_output);
+    return last;
+  }
+
+  error = hipDeviceSynchronize();
+  if (error != hipSuccess)
+  {
+    thrust::free(dev_tag, d_temp_storage);
+    thrust::free(dev_tag, d_output);
+    return last;
+  }
+
+  size_t offset;
+  hipMemcpy(&offset, d_output, sizeof(offset), hipMemcpyDeviceToHost);
+
+  thrust::free(dev_tag, d_temp_storage);
+  thrust::free(dev_tag, d_output);
+
+  return first + offset;
+}
+// END ADJACENT_FIND
 }
 
 namespace std
@@ -577,12 +636,7 @@ namespace std
     inline
     I adjacent_find(execution::parallel_unsequenced_policy, I f, I l)
     {
-        if (f == l) return l;
-
-        const auto r = ::thrust::mismatch(
-            ::thrust::device, f + 1, l, f, not_equal_to<>{});
-
-        return (r.first == l) ? l : r.second;
+      return ::thrust::adjacent_find(f, l, thrust::equal_to<> {});
     }
 
     template<
@@ -607,12 +661,7 @@ namespace std
     inline
     I adjacent_find(execution::parallel_unsequenced_policy, I f, I l, P p)
     {
-        if (f == l) return l;
-
-        const auto r = ::thrust::mismatch(
-            ::thrust::device, f + 1, l, f, not_fn(::std::move(p)));
-
-        return (r.first == l) ? l : r.second;
+      return ::thrust::adjacent_find(f, l, p);
     }
 
     template<
