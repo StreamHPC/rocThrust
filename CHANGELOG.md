@@ -12,6 +12,7 @@ Documentation for rocThrust available at
 * Added `--emulation` option for `rtest.py`
 * Merged changes from upstream CCCL/thrust 2.4.0
 * Added `find_first_of` to HIPSTDPAR
+* Added `search` and `find_end` to HIPSTDPAR
 
 ### Changed
 * `--test|-t` is no longer a required flag for `rtest.py`. Instead, the user can use either `--emulation|-e` or `--test|-t`, but not both.
