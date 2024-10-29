@@ -582,7 +582,7 @@ namespace std
                                  ForwardIt1 first, ForwardIt1 last,
                                  ForwardIt2 s_first, ForwardIt2 s_last)
     {
-        return ::thrust::find_first_of(first, last, s_first, s_last, [](auto const & lhs, auto const & rhs){ return lhs == rhs; });
+        return ::thrust::find_first_of(first, last, s_first, s_last, thrust::equal_to<> {});
     }
 
     template< class ForwardIt1,
