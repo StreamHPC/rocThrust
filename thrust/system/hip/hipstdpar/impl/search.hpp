@@ -184,6 +184,69 @@ search(InputIt1 first, InputIt1 last,
 }
 // END SEARCH
 
+// BEGIN SEARCH_N
+template <class InputIt1, class BinaryPred>
+InputIt1 THRUST_HIP_FUNCTION search_n(
+  InputIt1                                               first,
+  InputIt1                                               last,
+  size_t                                                 count,
+  std::iterator_traits<InputIterator>::value_type const& value,
+  BinaryPred                                             p)
+{
+  thrust::device_system_tag                        dev_tag;
+  size_t*                                          d_output;
+  std::iterator_traits<InputIterator>::value_type* d_value;
+  d_output = thrust::malloc<size_t>(dev_tag, sizeof(*d_output)).get();
+  d_value  = thrust::malloc<size_t>(dev_tag, sizeof(*d_value)).get();
+
+  hipMemcpy(d_value, &value, sizeof(*d_value), hipMemcpyHostToDevice);
+
+  size_t size = last - first;
+
+  // temp storage
+  size_t temp_storage_size_bytes;
+  void*  d_temp_storage = nullptr;
+  // Get size of d_temp_storage
+  hipError_t error =
+    ::rocprim::search_n(d_temp_storage, temp_storage_size_bytes, first, d_output, size, count, d_value, p);
+
+  if (error != hipSuccess)
+  {
+    return last;
+  }
+
+  d_temp_storage = thrust::malloc(dev_tag, temp_storage_size_bytes).get();
+
+  error = ::rocprim::search_n(d_temp_storage, temp_storage_size_bytes, first, d_output, size, count, d_value, p);
+
+  if (error != hipSuccess)
+  {
+    thrust::free(dev_tag, d_temp_storage);
+    thrust::free(dev_tag, d_output);
+    thrust::free(dev_tag, d_value);
+    return last;
+  }
+
+  error = hipDeviceSynchronize();
+  if (error != hipSuccess)
+  {
+    thrust::free(dev_tag, d_temp_storage);
+    thrust::free(dev_tag, d_output);
+    thrust::free(dev_tag, d_value);
+    return last;
+  }
+
+  size_t offset;
+  hipMemcpy(&offset, d_output, sizeof(offset), hipMemcpyDeviceToHost);
+
+  thrust::free(dev_tag, d_temp_storage);
+  thrust::free(dev_tag, d_output);
+  thrust::free(dev_tag, d_value);
+
+  return first + offset;
+}
+// END SEARCH_N
+
 // BEGIN FIND_END
 template<class InputIt1, class InputIt2, class BinaryPred>
 InputIt1 THRUST_HIP_FUNCTION
