@@ -1169,7 +1169,57 @@ namespace std
     // END SEARCH
 
     // BEGIN SEARCH_N
-    // TODO: UNIMPLEMENTED IN THRUST
+    template <class ForwardIt, enable_if_t<::hipstd::is_offloadable_iterator<ForwardIt>()>* = nullptr>
+    inline ForwardIt search_n(
+      execution::parallel_unsequenced_policy,
+      ForwardIt                                          first,
+      ForwardIt                                          last,
+      size_t                                             count,
+      std::iterator_traits<ForwardIt>::value_type const& value)
+    {
+      return ::thrust::search_n(first, last, count, value, thrust::equal_to<>{});
+    }
+
+    template <class ForwardIt, enable_if_t<!::hipstd::is_offloadable_iterator<ForwardIt>()>* = nullptr>
+    inline ForwardIt search_n(
+      execution::parallel_unsequenced_policy,
+      ForwardIt                                          first,
+      ForwardIt                                          last,
+      size_t                                             count,
+      std::iterator_traits<ForwardIt>::value_type const& value)
+    {
+      return ::std::search_n(::std::execution::par, first, last, count, value);
+    }
+
+    template <class ForwardIt,
+              class BinaryPred,
+              enable_if_t<::hipstd::is_offloadable_iterator<ForwardIt>()
+                          && ::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
+    inline ForwardIt search(
+      execution::parallel_unsequenced_policy,
+      ForwardIt                                          first,
+      ForwardIt                                          last,
+      size_t                                             count,
+      std::iterator_traits<ForwardIt>::value_type const& value,
+      BinaryPred                                         p)
+    {
+      return ::thrust::search_n(first, last, count, value, p);
+    }
+
+    template <class ForwardIt,
+              class BinaryPred,
+              enable_if_t<!::hipstd::is_offloadable_iterator<ForwardIt>()
+                          || !::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
+    inline ForwardIt search(
+      execution::parallel_unsequenced_policy,
+      ForwardIt                                          first,
+      ForwardIt                                          last,
+      size_t                                             count,
+      std::iterator_traits<ForwardIt>::value_type const& value,
+      BinaryPred                                         p)
+    {
+      return ::std::search(::std::execution::par, first, last, count, value, p);
+    }
     // END SEARCH_N
 }
 #else // __HIPSTDPAR__
