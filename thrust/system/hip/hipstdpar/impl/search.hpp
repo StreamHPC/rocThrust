@@ -187,7 +187,11 @@ search(InputIt1 first, InputIt1 last,
 // BEGIN SEARCH_N
 template <class InputIt, class BinaryPred>
 InputIt THRUST_HIP_FUNCTION search_n(
-  InputIt first, InputIt last, size_t count, std::iterator_traits<InputIt>::value_type const& value, BinaryPred p)
+  InputIt                                                   first,
+  InputIt                                                   last,
+  size_t                                                    count,
+  typename std::iterator_traits<InputIt>::value_type const& value,
+  BinaryPred                                                p)
 {
   thrust::device_system_tag                        dev_tag;
   size_t*                                          d_output;
