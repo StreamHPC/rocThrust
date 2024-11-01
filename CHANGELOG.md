@@ -14,6 +14,7 @@ Documentation for rocThrust available at
 * Merged changes from upstream CCCL/thrust 2.5.0
 * Added `find_first_of` to HIPSTDPAR
 * Added `search` and `find_end` to HIPSTDPAR
+* Added `search_n` to HIPSTDPAR
 * Updated HIPSTDPAR's `adjacent_find` to use rocPRIM's implementation
 
 ### Changed
