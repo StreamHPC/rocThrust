@@ -191,7 +191,7 @@ InputIt THRUST_HIP_FUNCTION search_n(
 {
   thrust::device_system_tag                        dev_tag;
   size_t*                                          d_output;
-  std::iterator_traits<InputIt>::value_type*       d_value;
+  typename std::iterator_traits<InputIt>::value_type* d_value;
   d_output = thrust::malloc<size_t>(dev_tag, sizeof(*d_output)).get();
   d_value  = thrust::malloc<size_t>(dev_tag, sizeof(*d_value)).get();
 
@@ -1172,10 +1172,10 @@ namespace std
     template <class ForwardIt, enable_if_t<::hipstd::is_offloadable_iterator<ForwardIt>()>* = nullptr>
     inline ForwardIt search_n(
       execution::parallel_unsequenced_policy,
-      ForwardIt                                          first,
-      ForwardIt                                          last,
-      size_t                                             count,
-      std::iterator_traits<ForwardIt>::value_type const& value)
+      ForwardIt                                                   first,
+      ForwardIt                                                   last,
+      size_t                                                      count,
+      typename std::iterator_traits<ForwardIt>::value_type const& value)
     {
       return ::thrust::search_n(first, last, count, value, thrust::equal_to<>{});
     }
@@ -1183,10 +1183,10 @@ namespace std
     template <class ForwardIt, enable_if_t<!::hipstd::is_offloadable_iterator<ForwardIt>()>* = nullptr>
     inline ForwardIt search_n(
       execution::parallel_unsequenced_policy,
-      ForwardIt                                          first,
-      ForwardIt                                          last,
-      size_t                                             count,
-      std::iterator_traits<ForwardIt>::value_type const& value)
+      ForwardIt                                                   first,
+      ForwardIt                                                   last,
+      size_t                                                      count,
+      typename std::iterator_traits<ForwardIt>::value_type const& value)
     {
       return ::std::search_n(::std::execution::par, first, last, count, value);
     }
@@ -1197,11 +1197,11 @@ namespace std
                           && ::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
     inline ForwardIt search(
       execution::parallel_unsequenced_policy,
-      ForwardIt                                          first,
-      ForwardIt                                          last,
-      size_t                                             count,
-      std::iterator_traits<ForwardIt>::value_type const& value,
-      BinaryPred                                         p)
+      ForwardIt                                                   first,
+      ForwardIt                                                   last,
+      size_t                                                      count,
+      typename std::iterator_traits<ForwardIt>::value_type const& value,
+      BinaryPred                                                  p)
     {
       return ::thrust::search_n(first, last, count, value, p);
     }
@@ -1212,11 +1212,11 @@ namespace std
                           || !::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
     inline ForwardIt search(
       execution::parallel_unsequenced_policy,
-      ForwardIt                                          first,
-      ForwardIt                                          last,
-      size_t                                             count,
-      std::iterator_traits<ForwardIt>::value_type const& value,
-      BinaryPred                                         p)
+      ForwardIt                                                   first,
+      ForwardIt                                                   last,
+      size_t                                                      count,
+      typename std::iterator_traits<ForwardIt>::value_type const& value,
+      BinaryPred                                                  p)
     {
       return ::std::search(::std::execution::par, first, last, count, value, p);
     }
