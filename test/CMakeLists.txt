@@ -252,7 +252,14 @@ if(BUILD_TEST OR BUILD_HIPSTDPAR_TEST)
             "Not building hipstdpar tests, currently they do not support Windows."
         )
     else()
-        add_subdirectory(hipstdpar)
+        if ((CMAKE_C_COMPILER_ID MATCHES GNU AND CMAKE_C_COMPILER_VERSION VERSION_GREATER_EQUAL 11.0.0) OR NOT CMAKE_C_COMPILER_ID MATCHES GNU)
+            add_subdirectory(hipstdpar)
+        else()
+            message(
+                STATUS
+                "Not building hipstdpar tests, libstdc++-11 or greater is required."
+            )
+        endif()
     endif()
 endif()
 

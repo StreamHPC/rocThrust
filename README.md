@@ -299,6 +299,7 @@ ctest --output-on-failure
 #### Requirements
 * [rocPRIM](https://github.com/ROCm/rocPRIM) and [rocThrust](https://github.com/ROCm/rocThrust) libraries
 * [TBB](https://www.intel.com/content/www/us/en/developer/tools/oneapi/onetbb.html) library
+  * Notice that oneTBB (oneAPI TBB) may fail to compile when libstdc++-9 or -10 is used, due to them using legacy TBB interfaces that are incompatible with the oneTBB ones (see the [release notes](https://www.intel.com/content/www/us/en/developer/articles/release-notes/intel-oneapi-threading-building-blocks-release-notes.html)).
 * CMake (3.10.2 or later)
 
 ## Support
