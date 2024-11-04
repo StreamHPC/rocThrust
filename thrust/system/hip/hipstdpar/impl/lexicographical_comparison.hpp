@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/lexicographical_comparison.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/lexicographical_comparison.hpp
  *  \brief <tt>Lexicographical comparison operations</tt> implementation detail header for HIPSTDPAR.
  */
 

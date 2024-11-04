@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/min_max.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/min_max.hpp
  *  \brief <tt>Minimum/maximum operations</tt> implementation detail header for HIPSTDPAR.
  */
 

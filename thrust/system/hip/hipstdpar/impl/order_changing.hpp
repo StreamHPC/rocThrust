@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/order_changing.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/order_changing.hpp
  *  \brief <tt>Order-changing operations</tt> implementation detail header for HIPSTDPAR.
  */
 

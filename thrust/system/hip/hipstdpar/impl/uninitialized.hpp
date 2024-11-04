@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/uninitialized.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/uninitialized.hpp
  *  \brief <tt>Operations on unitialized memory</tt> implementation detail header for HIPSTDPAR.
  */
 

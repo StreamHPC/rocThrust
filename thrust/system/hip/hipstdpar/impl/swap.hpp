@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/swap.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/swap.hpp
  *  \brief <tt>Swap operations</tt> implementation detail header for HIPSTDPAR.
  */
 

@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/numeric.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/numeric.hpp
  *  \brief <tt>Numeric operations</tt> implementation detail header for HIPSTDPAR.
  */
 

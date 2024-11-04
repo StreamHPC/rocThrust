@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/merge.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/merge.hpp
  *  \brief <tt>Merge operations</tt> implementation detail header for HIPSTDPAR.
  */
 

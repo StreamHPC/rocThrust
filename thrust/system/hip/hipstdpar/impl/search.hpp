@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/search.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/search.hpp
  *  \brief <tt>Search operations</tt> implementation detail header for HIPSTDPAR.
  */
 

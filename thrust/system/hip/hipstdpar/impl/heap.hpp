@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/heap.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/heap.hpp
  *  \brief <tt>Heap operations</tt> implementation detail header for HIPSTDPAR.
  */
 

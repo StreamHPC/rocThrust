@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/set.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/set.hpp
  *  \brief <tt>Set operations</tt> implementation detail header for HIPSTDPAR.
  */
 

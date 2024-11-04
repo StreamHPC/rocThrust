@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/hipstd.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/hipstd.hpp
  *  \brief hipstd utilities implementation detail header for HIPSTDPAR.
  */
 

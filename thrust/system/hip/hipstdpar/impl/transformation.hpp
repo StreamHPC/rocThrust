@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/transformation.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/transformation.hpp
  *  \brief <tt>Transformation operations</tt> implementation detail header for HIPSTDPAR.
  */
 

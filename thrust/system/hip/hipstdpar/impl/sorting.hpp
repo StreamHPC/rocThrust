@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/sorting.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/sorting.hpp
  *  \brief <tt>Sorting operations</tt> implementation detail header for HIPSTDPAR.
  */
 

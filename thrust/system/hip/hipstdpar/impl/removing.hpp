@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/removing.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/removing.hpp
  *  \brief <tt>Removing operations</tt> implementation detail header for HIPSTDPAR.
  */
 

@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/generation.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/generation.hpp
  *  \brief <tt>Generation operations</tt> implementation detail header for HIPSTDPAR.
  */
 

@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/batch.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/batch.hpp
  *  \brief <tt>Batch operations</tt> implementation detail header for HIPSTDPAR.
  */
 

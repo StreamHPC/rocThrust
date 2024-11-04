@@ -12,7 +12,7 @@
  *  limitations under the License.
  */
 
-/*! \file thrust/system/hip/hipstdpar/include/partitioning.hpp
+/*! \file thrust/system/hip/hipstdpar/impl/partitioning.hpp
  *  \brief <tt>Partitioning operations</tt> implementation detail header for HIPSTDPAR.
  */
 
