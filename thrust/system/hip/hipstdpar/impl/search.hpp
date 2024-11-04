@@ -193,11 +193,11 @@ InputIt THRUST_HIP_FUNCTION search_n(
   typename std::iterator_traits<InputIt>::value_type const& value,
   BinaryPred                                                p)
 {
+  using input_type = typename std::iterator_traits<InputIt>::value_type;
   thrust::device_system_tag                        dev_tag;
-  size_t*                                          d_output;
-  typename std::iterator_traits<InputIt>::value_type* d_value;
-  d_output = thrust::malloc<size_t>(dev_tag, sizeof(*d_output)).get();
-  d_value  = thrust::malloc<size_t>(dev_tag, sizeof(*d_value)).get();
+
+  auto d_output = thrust::malloc<size_t>(dev_tag, sizeof(*d_output)).get();
+  auto d_value  = thrust::malloc<input_type>(dev_tag, sizeof(*d_value)).get();
 
   hipMemcpy(d_value, &value, sizeof(*d_value), hipMemcpyHostToDevice);
 
