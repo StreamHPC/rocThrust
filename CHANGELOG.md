@@ -3,6 +3,12 @@
 Documentation for rocThrust available at
 [https://rocm.docs.amd.com/projects/rocThrust/en/latest/](https://rocm.docs.amd.com/projects/rocThrust/en/latest/).
 
+## (Unreleased) rocThrust 3.x.x for ROCm 6.x
+
+### Changes
+
+* Changed the C++ version from 14 to 17. C++14 will be deprecated in the next major release.
+
 ## (Unreleased) rocThrust 3.3.0 for ROCm 6.4
 
 ### Added
