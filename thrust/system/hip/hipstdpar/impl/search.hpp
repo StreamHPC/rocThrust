@@ -1223,7 +1223,7 @@ namespace std
       typename std::iterator_traits<ForwardIt>::value_type const& value,
       BinaryPred                                                  p)
     {
-      return ::std::search(::std::execution::par, first, last, count, value, p);
+      return ::std::search_n(::std::execution::par, first, last, count, value, p);
     }
     // END SEARCH_N
 }
