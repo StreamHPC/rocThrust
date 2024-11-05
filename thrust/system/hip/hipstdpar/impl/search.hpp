@@ -1200,7 +1200,7 @@ namespace std
               class BinaryPred,
               enable_if_t<::hipstd::is_offloadable_iterator<ForwardIt>()
                           && ::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
-    inline ForwardIt search(
+    inline ForwardIt search_n(
       execution::parallel_unsequenced_policy,
       ForwardIt                                                   first,
       ForwardIt                                                   last,
@@ -1215,7 +1215,7 @@ namespace std
               class BinaryPred,
               enable_if_t<!::hipstd::is_offloadable_iterator<ForwardIt>()
                           || !::hipstd::is_offloadable_callable<BinaryPred>()>* = nullptr>
-    inline ForwardIt search(
+    inline ForwardIt search_n(
       execution::parallel_unsequenced_policy,
       ForwardIt                                                   first,
       ForwardIt                                                   last,
