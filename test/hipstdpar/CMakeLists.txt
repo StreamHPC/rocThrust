@@ -84,6 +84,9 @@ if(NOT TARGET TBB::tbb AND NOT TARGET tbb)
         GIT_REPOSITORY https://github.com/oneapi-src/oneTBB.git
         GIT_TAG        1c4c93fc5398c4a1acb3492c02db4699f3048dea # v2021.13.0
     )
+    # Disable tests for TBB
+    set(TBB_TEST OFF CACHE BOOL "Disable TBB tests" FORCE)
+
     FetchContent_MakeAvailable(thread-building-blocks)
 else()
     find_package(TBB REQUIRED)
