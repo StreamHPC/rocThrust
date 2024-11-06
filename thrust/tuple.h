@@ -492,12 +492,37 @@ get(const detail::cons<HT, TT>& t);
 
 
 #if THRUST_CPP_DIALECT >= 2017
+/*! Constructs a \p tuple from a variadic list of types \p Ts, allowing the \p tuple to deduce 
+ *  its type as \p tuple<Ts...> based on the types of the provided arguments.
+ *
+ *  \tparam Ts... The parameter pack of types that will determine the tuple's type.
+ *  \note This deduction guide enables automatic type deduction for variadic arguments 
+ *        when constructing a \p tuple.
+ *  \see tuple
+ */
 template <class... Ts>
 THRUST_HOST_DEVICE tuple(Ts...) -> tuple<Ts...>;
 
+/*! A \p pair is a structure template holding two elements of types \p T1 and \p T2.
+ *
+ *  \tparam T1 The type of the first element in the \p pair.
+ *  \tparam T2 The type of the second element in the \p pair.
+ *  \note \p pair is used to store two heterogeneous values and can be converted to a \p tuple.
+ *  \see tuple
+ */
 template <class T1, class T2>
 struct pair;
 
+/*! Constructs a \p tuple from a \p pair<T1,T2>, unpacking its elements to initialize
+ *  the tuple as \p tuple<T1,T2>.
+ *
+ *  \tparam T1 The type of the first element in the \p pair.
+ *  \tparam T2 The type of the second element in the \p pair.
+ *  \note This deduction guide allows a \p tuple to be created directly from a \p pair,
+ *        simplifying the type conversion.
+ *  \see pair
+ *  \see tuple
+ */
 template <class T1, class T2>
 THRUST_HOST_DEVICE tuple(pair<T1, T2>) -> tuple<T1, T2>;
 #endif
