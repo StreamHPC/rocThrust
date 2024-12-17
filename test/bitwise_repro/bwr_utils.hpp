@@ -21,7 +21,7 @@
 #ifndef BWR_UTILS_HPP
 #define BWR_UTILS_HPP
 
-#include "../thrust/include/rocthrust_version.hpp"
+#include <thrust/rocthrust_version.hpp>
 #include <hip/hip_runtime_api.h>
 #include <string>
 
@@ -502,4 +502,3 @@ private:
 } // end namespace bwr_utils
 
 #endif // BRW_UTILS_HPP
-

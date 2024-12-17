@@ -55,7 +55,7 @@ namespace __parallel_for
     };
 
     template <unsigned int BlockSize, class F, class Size, unsigned int ItemsPerThread>
-    __global__
+    ROCPRIM_KERNEL
     THRUST_HIP_LAUNCH_BOUNDS(BlockSize)
     void kernel(F f, Size num_items, Size offset)
     {
