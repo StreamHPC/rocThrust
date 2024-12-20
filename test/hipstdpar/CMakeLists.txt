@@ -79,21 +79,6 @@ set(ROCTHRUST_CMAKE_CXX_STANDARD ${CMAKE_CXX_STANDARD})
 set(CMAKE_CXX_STANDARD 17)
 
 # Dependencies
-find_package(TBB QUIET)
-if(NOT TARGET TBB::tbb AND NOT TARGET tbb)
-    message(STATUS "Thread Building Blocks not found. Fetching...")
-    FetchContent_Declare(
-        thread-building-blocks
-        GIT_REPOSITORY https://github.com/oneapi-src/oneTBB.git
-        GIT_TAG        1c4c93fc5398c4a1acb3492c02db4699f3048dea # v2021.13.0
-    )
-    # Disable tests for TBB
-    set(TBB_TEST OFF CACHE BOOL "Disable TBB tests" FORCE)
-
-    FetchContent_MakeAvailable(thread-building-blocks)
-else()
-    find_package(TBB REQUIRED)
-endif()
 find_package(Threads REQUIRED)
 
 # Define where to find rocThrust and hipstdpar headers
