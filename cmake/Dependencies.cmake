@@ -35,7 +35,7 @@ if(NOT rocprim_FOUND)
 endif()
 
 # Test dependencies
-if(BUILD_TEST)
+if(BUILD_TEST OR BUILD_HIPSTDPAR_TEST)
   if(NOT DEPENDENCIES_FORCE_DOWNLOAD)
     # Google Test (https://github.com/google/googletest)
     find_package(GTest QUIET)
@@ -64,7 +64,7 @@ if(BUILD_TEST)
     find_package(GTest REQUIRED CONFIG PATHS ${GTEST_ROOT})
   endif()
 
-  if (NOT TARGET TBB:tbb AND NOT TARGET tbb)
+  if (NOT TARGET TBB:tbb AND NOT TARGET tbb AND BUILD_HIPSTDPAR_TEST_WITH_TBB)
     message(STATUS "TBB not found or force download TBB on. Downloading and building TBB.")
     set(TBB_ROOT ${CMAKE_CURRENT_BINARY_DIR}/deps/tbb CACHE PATH "" FORCE)
 
