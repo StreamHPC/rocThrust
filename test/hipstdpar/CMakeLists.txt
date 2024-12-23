@@ -14,7 +14,8 @@ function(add_hipstdpar_test TEST TEST_TYPE INTERPOSE_ALLOC)
         PRIVATE
             --hipstdpar
             --hipstdpar-path=${HIPSTDPAR_LOCATION}
-            --hipstdpar-thrust-path=${THRUST_LOCATION})
+            --hipstdpar-thrust-path=${THRUST_LOCATION}
+            --hipstdpar-prim-path=${ROCPRIM_LOCATION})
     if(INTERPOSE_ALLOC)
         target_compile_options(${TEST_TARGET}
             PRIVATE
@@ -87,9 +88,10 @@ set(CMAKE_CXX_STANDARD 17)
 # Dependencies
 find_package(Threads REQUIRED)
 
-# Define where to find rocThrust and hipstdpar headers
+# Define where to find rocThrust, hipstdpar and rocPRIM headers
 set(THRUST_LOCATION ${PROJECT_SOURCE_DIR})
 set(HIPSTDPAR_LOCATION ${THRUST_LOCATION}/thrust/system/hip/hipstdpar)
+set(ROCPRIM_LOCATION ${ROCPRIM_INCLUDE_DIR})
 
 # Add tests
 add_hipstdpar_test("algorithms" "compile" OFF)
