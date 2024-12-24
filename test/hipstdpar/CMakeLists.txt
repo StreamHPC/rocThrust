@@ -28,7 +28,7 @@ function(add_hipstdpar_test TEST TEST_TYPE INTERPOSE_ALLOC)
             Threads::Threads
     )
 
-    if(BUILD_HIPSTDPAR_TEST_WITH_TBB)
+    if(TARGET TBB::tbb OR TARGET tbb)
         target_link_libraries(${TEST_TARGET}
             PRIVATE
                 TBB::tbb
