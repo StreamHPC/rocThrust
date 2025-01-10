@@ -1,5 +1,5 @@
 # ########################################################################
-# Copyright 2019-2024 Advanced Micro Devices, Inc.
+# Copyright 2019-2025 Advanced Micro Devices, Inc.
 # ########################################################################
 
 cmake_minimum_required(VERSION 3.10.2 FATAL_ERROR)
@@ -113,10 +113,9 @@ endif()
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 
-if(DISABLE_WERROR)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra ")
-else()
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -Wextra -Werror")
+set(COMPILE_OPTIONS -Wall -Wextra)
+if(NOT DISABLE_WERROR)
+  list(APPEND COMPILE_OPTIONS -Werror)
 endif()
 
 if (CMAKE_CXX_STANDARD EQUAL 14)
@@ -132,8 +131,7 @@ endif()
 
 # Address Sanitizer
 if(BUILD_ADDRESS_SANITIZER)
-  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -fsanitize=address -shared-libasan")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -fsanitize=address -shared-libasan")
+  list(APPEND COMPILE_OPTIONS -fsanitize=address -shared-libasan)
   add_link_options(-fuse-ld=lld)
 endif()
 
