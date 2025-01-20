@@ -12,7 +12,12 @@ function(add_hipstdpar_test TEST TEST_TYPE INTERPOSE_ALLOC)
         PRIVATE
             --hipstdpar
             --hipstdpar-path=${HIPSTDPAR_LOCATION}
-            --hipstdpar-thrust-path=${THRUST_LOCATION})
+            --hipstdpar-thrust-path=${THRUST_LOCATION}
+            --hipstdpar-prim-path=${ROCPRIM_LOCATION}
+            # --hipstdpar-thrust-path is not enough because thrust/rocthrust_version.hpp is
+            # generated in the binary directory
+            -idirafter ${THRUST_BINARY_LOCATION}
+    )
     if(INTERPOSE_ALLOC)
         target_compile_options(${TEST_TARGET}
             PRIVATE
@@ -94,8 +99,10 @@ else()
 endif()
 find_package(Threads REQUIRED)
 
-# Define where to find rocThrust and hipstdpar headers
+# Define where to find rocThrust, rocPRIM and hipstdpar headers
 set(THRUST_LOCATION ${PROJECT_SOURCE_DIR})
+set(THRUST_BINARY_LOCATION ${PROJECT_BINARY_DIR}/thrust/include)
+set(ROCPRIM_LOCATION ${rocprim_INCLUDE_DIR})
 set(HIPSTDPAR_LOCATION ${THRUST_LOCATION}/thrust/system/hip/hipstdpar)
 
 # Add tests
